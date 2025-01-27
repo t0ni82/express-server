@@ -33,3 +33,29 @@ function createUser(userData) {
     })
     .catch((error) => console.error("Error creating user:", error));
 }
+
+function updateUserById(id, userData) {
+  fetch(`/api/v1/users/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("User updated:", data);
+    })
+    .catch((error) => console.error("Error updating user:", error));
+}
+
+function deleteUserById(id) {
+  fetch(`/api/v1/users/${id}`, {
+    method: "DELETE",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("User deleted:", data);
+    })
+    .catch((error) => console.error("Error deleting user:", error));
+}
