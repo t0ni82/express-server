@@ -39,6 +39,34 @@ app.post("/api/v1/users", (req, res) => {
   res.status(201).json({ success: true, user: newUser });
 });
 
+//Actualizar un usuario por su id
+app.put("/api/v1/users/:id", (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  const user = users.find((user) => user.id === parseInt(id));
+  if (!user) {
+    return res.status(404).json({ success: false, message: "User not found" });
+  }
+  users = users.map((user) => {
+    if (user.id === parseInt(id)) {
+      user.name = name;
+    }
+    return user;
+  });
+  res.json({ success: true, user });
+});
+
+//Eliminar un usuario por su id
+app.delete("/api/v1/users/:id", (req, res) => {
+  const { id } = req.params;
+  const user = users.find((user) => user.id === parseInt(id));
+  if (!user) {
+    return res.status(404).json({ success: false, message: "User not found" });
+  }
+  users = users.filter((user) => user.id !== parseInt(id));
+  res.json({ success: true, message: "User deleted" });
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
